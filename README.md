@@ -1,6 +1,8 @@
 # 🤖 Projeto Bob DIO — Plataforma de Trilhas com IA
 
-> Projeto desenvolvido inteiramente com **IBM Bob AI** como par de programação, demonstrando como uma IA pode ser usada para construir uma plataforma real de trilhas de aprendizado, desafios de código e certificados — do zero à API.
+> Projeto desenvolvido inteiramente com **IBM Bob AI** como par de programação, demonstrando como uma IA pode ser usada para construir uma plataforma real de trilhas de aprendizado, desafios de código e certificados — do zero à API e ao front-end em produção.
+
+🌐 **Deploy:** [projeto-bob-dio.vercel.app](https://projeto-bob-dio.vercel.app)
 
 ---
 
@@ -10,6 +12,7 @@
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Estrutura do Projeto](#-estrutura-do-projeto)
 - [Fluxograma do Sistema](#-fluxograma-do-sistema)
+- [Front-end React + Tailwind](#-front-end-react--tailwind)
 - [Como Inicializar o Projeto](#-como-inicializar-o-projeto)
 - [Slash Commands](#-slash-commands)
 - [MCP Server — API via Protocolo MCP](#-mcp-server--api-via-protocolo-mcp)
@@ -26,10 +29,11 @@
 Este projeto nasceu de uma conversa com o **IBM Bob AI** e evoluiu em sessões incrementais, onde cada prompt do usuário adicionou uma camada nova à plataforma. O resultado é uma aplicação completa que:
 
 - 📚 **Consulta trilhas de aprendizado** a partir de um JSON com 30 tecnologias
-- ⚔️ **Gera desafios de código** calibrados ao nível de cada trilha
-- 🏆 **Emite certificados fictícios** em Markdown com código de verificação único
+- ⚔️ **Gera desafios de código** calibrados ao nível de cada trilha, com link direto para playground online
+- 🏆 **Emite certificados** no estilo PDF com código de verificação único e botões de compartilhamento
 - 🔌 **Expõe tudo via servidor MCP** — acessível por qualquer cliente compatível com o protocolo Model Context Protocol
 - ✅ **Suite de testes com 387 casos** e 100% de cobertura
+- 🌐 **Front-end em React + Tailwind** hospedado no Vercel
 
 ---
 
@@ -42,6 +46,8 @@ Este projeto nasceu de uma conversa com o **IBM Bob AI** e evoluiu em sessões i
 | Linguagem do servidor | TypeScript + Node.js v24 |
 | Validação de esquemas | Zod v4 |
 | SDK MCP | `@modelcontextprotocol/sdk` v1.30 |
+| **Front-end** | **React 19 + Tailwind CSS v4 + Vite 8** |
+| **Deploy** | **Vercel** |
 | Dados | JSON estático (`data/trilhas.json`) |
 | Testes | JavaScript puro (runner customizado, sem frameworks) |
 | Slash Commands | Markdown (`.bob/commands/`) |
@@ -65,27 +71,32 @@ projeto-bob-dio/
 │
 ├── docs/                          # Documentação e certificados gerados
 │
-├── mcp/                           # Servidor MCP (TypeScript)
+├── frontend-react/                # 🆕 Front-end React + Tailwind CSS
 │   ├── src/
-│   │   └── index.ts               # Código-fonte — 4 ferramentas MCP
-│   ├── build/
-│   │   └── index.js               # Compilado (gerado por `npm run build`)
-│   ├── package.json
-│   └── tsconfig.json
+│   │   ├── App.jsx                # Roteamento entre as 3 views
+│   │   ├── data.js                # Trilhas, helpers, playground URLs
+│   │   ├── index.css              # Tailwind + print styles
+│   │   └── components/
+│   │       ├── Navbar.jsx         # Header sticky com tabs de navegação
+│   │       ├── TrilhaCard.jsx     # Card de trilha com hover animado
+│   │       ├── TrilhaDetalhe.jsx  # Detalhe: stats, badges, lives, promoção
+│   │       ├── ViewTrilhas.jsx    # Grid de trilhas + busca + filtros
+│   │       ├── ViewDesafio.jsx    # Gerador de desafios + link playground
+│   │       ├── ViewCertificado.jsx# Certificado PDF + compartilhamento
+│   │       └── nivelColors.js     # Cores por nível (reutilizável)
+│   ├── vite.config.js
+│   └── package.json
 │
-├── tests/                         # Suite de testes
-│   ├── helpers/
-│   │   ├── trilhasHelper.js       # Funções puras testáveis
-│   │   └── outputBuilder.js       # Builders de output dos comandos
-│   ├── helpers.test.js            # 51 testes unitários
-│   ├── trilha.flow.test.js        # 125 testes de fluxo do /trilha
-│   ├── desafio.flow.test.js       # 76 testes de fluxo do /desafio
-│   ├── certificado.flow.test.js   # 135 testes de fluxo do /certificado
-│   └── run-tests.js               # Runner — executa tudo e grava test-results.txt
+├── mcp/                           # Servidor MCP (TypeScript)
+│   ├── src/index.ts               # 4 ferramentas MCP
+│   ├── build/index.js             # Compilado
+│   └── package.json
 │
-├── .bobignore                     # Arquivos ignorados pelo Bob AI
+├── tests/                         # Suite de testes (387 casos, 100%)
+│
+├── vercel.json                    # 🆕 Configuração de deploy no Vercel
+├── .bobignore
 ├── .gitignore
-├── test-results.txt               # Relatório de testes (gerado automaticamente)
 └── README.md
 ```
 
@@ -95,13 +106,16 @@ projeto-bob-dio/
 
 ```mermaid
 flowchart TD
-    U([👤 Usuário]) -->|digita comando| BOB[🤖 Bob AI]
+    U([👤 Usuário]) -->|acessa URL| FE[🌐 Front-end React\nVercel]
+    U -->|digita comando| BOB[🤖 Bob AI]
+
+    FE --> V1[📚 View Trilhas\nbusca + filtros]
+    FE --> V2[⚔️ View Desafio\nplayground online]
+    FE --> V3[🏆 View Certificado\nPDF + compartilhamento]
 
     BOB --> SC{Tipo de\ninteração}
-
     SC -->|Slash Command| CMD[.bob/commands/]
     SC -->|Ferramenta MCP| MCP[MCP Server\nmcp/build/index.js]
-    SC -->|Pergunta direta| BOB
 
     CMD --> C1[/trilha]
     CMD --> C2[/desafio]
@@ -112,29 +126,81 @@ flowchart TD
     MCP --> T3[gerar_desafio]
     MCP --> T4[gerar_certificado]
 
-    C1 --> JSON[(data/trilhas.json)]
-    C2 --> JSON
-    C3 --> JSON
+    V1 --> JSON[(data/trilhas.json)]
+    V2 --> JSON
+    V3 --> JSON
     T1 --> JSON
     T2 --> JSON
     T3 --> JSON
     T4 --> JSON
 
-    JSON -->|30 trilhas| PROC[Processamento\nfindTrilha · buildOutput\ngerarCodigo · formatarData]
-
-    PROC --> R1[📚 Plano de Estudos\ncom módulos, badges\nlives e promoções]
-    PROC --> R2[⚔️ Desafio de Código\ncategoria sorteada\ncasos de teste]
-    PROC --> R3[🏆 Certificado Markdown\nDIO-XXXX-XXX-AAAA]
-
-    R1 --> U
-    R2 --> U
-    R3 --> U
-
     style U fill:#4A90D9,color:#fff
     style BOB fill:#FF6B35,color:#fff
+    style FE fill:#22c55e,color:#fff
     style JSON fill:#2ECC71,color:#fff
     style MCP fill:#9B59B6,color:#fff
-    style CMD fill:#3498DB,color:#fff
+```
+
+---
+
+## 🌐 Front-end React + Tailwind
+
+O front-end foi construído com **React 19 + Tailwind CSS v4 + Vite 8** e está hospedado no **Vercel**.
+
+### Funcionalidades
+
+#### 📚 Trilhas
+- Grid responsivo com as 30 trilhas
+- **Busca com botão Pesquisar** — filtra por nome ou tecnologia
+- **Filtros por nível** — Todos / Básico / Intermediário / Avançado
+- Badge de nível colorido por categoria
+- Tag 🔥 de promoção quando ativa
+- Clique no card abre o detalhe completo (módulos, XP, badges, lives)
+
+#### ⚔️ Desafio de Código
+- Seleciona tecnologia + categoria (ou sorteia aleatória)
+- Enunciado calibrado ao nível da trilha (XP e tempo estimado)
+- Botão **💻 Resolver Online** — abre o playground mais adequado para cada tecnologia:
+
+| Tecnologia | Playground |
+|---|---|
+| Python / ML / Data Science | Google Colab |
+| React | StackBlitz (fork React) |
+| Angular | StackBlitz (fork Angular) |
+| Vue.js | Vue Playground |
+| TypeScript | TypeScript Playground oficial |
+| Flutter / Dart | DartPad |
+| Kotlin / Android | Kotlin Playground |
+| Rust | Rust Playground |
+| Go | Go Playground |
+| C# / .NET | .NET Fiddle |
+| SQL | SQL Fiddle |
+| Blockchain / Solidity | Remix IDE |
+| Segurança da Informação | TryHackMe |
+| AWS | AWS CloudShell |
+| Azure | Azure Cloud Shell |
+
+#### 🏆 Certificado
+- Layout estilo **PDF** com gradiente DIO, nome em destaque, badges e código de verificação
+- **🖨️ Salvar / Imprimir PDF** — `window.print()` com estilos de impressão otimizados
+- **🔗 Copiar Link** — URL do certificado com feedback visual
+- **LinkedIn** — compartilha diretamente na timeline
+- **X / Twitter** — tweet com texto pré-formatado
+- **WhatsApp** — mensagem com link do certificado
+
+### Rodar localmente
+
+```bash
+cd frontend-react
+npm install
+npm run dev        # http://localhost:5173
+```
+
+### Build de produção
+
+```bash
+npm run build      # gera frontend-react/dist/
+npm run preview    # preview local do build
 ```
 
 ---
@@ -150,15 +216,24 @@ flowchart TD
 ### 1. Clone o repositório
 
 ```bash
-git clone <url-do-repositorio>
+git clone https://github.com/pmdasilva/projeto-bob-dio.git
 cd projeto-bob-dio
 ```
 
-### 2. Instale as dependências do servidor MCP
+### 2. Front-end React (recomendado)
+
+```bash
+cd frontend-react
+npm install
+npm run dev        # abre em http://localhost:5173
+```
+
+### 3. Servidor MCP (opcional — integração com Bob AI)
 
 ```bash
 cd mcp
 npm install
+npm run build
 ```
 
 > **Windows com PowerShell restrito:** se encontrar erro de execução de scripts, use:
@@ -166,56 +241,28 @@ npm install
 > & "C:\Program Files\nodejs\node.exe" "C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js" install
 > ```
 
-### 3. Compile o servidor MCP
-
-```bash
-npm run build
-```
-
-O arquivo `mcp/build/index.js` será gerado.
-
-### 4. Abra o projeto no VS Code com Bob AI
-
-Ao abrir o workspace, o Bob AI detecta automaticamente o arquivo `.bob/mcp.json` e conecta o servidor MCP. Verifique no painel **MCP** do Bob se `dio-mcp-server` aparece como **conectado**.
-
-### 5. (Opcional) Execute os testes
+### 4. (Opcional) Execute os testes
 
 ```bash
 node tests/run-tests.js
 ```
 
-O relatório será gravado em `test-results.txt`.
-
 ---
 
 ## 💬 Slash Commands
 
-Os slash commands são arquivos Markdown em `.bob/commands/` que ensinam o Bob AI a responder a padrões específicos de entrada. Digite `/` no chat do Bob para ver todos disponíveis.
+Os slash commands são arquivos Markdown em `.bob/commands/` que ensinam o Bob AI a responder a padrões específicos de entrada.
 
 ### `/trilha <tecnologia>`
-
-Consulta o plano de estudos de uma tecnologia a partir do `data/trilhas.json`.
 
 ```
 /trilha React
 /trilha Python
 /trilha AWS
 /trilha docker        ← busca parcial, case-insensitive
-/trilha machine       ← encontra "Python / Machine Learning"
 ```
 
-**O que retorna:**
-- Nome e nível da trilha
-- Tabela de módulos proporcional ao número real de módulos
-- Badges conquistáveis
-- Próximas lives ao vivo com data, horário e instrutor
-- Promoção ativa (se houver)
-
----
-
 ### `/desafio <tecnologia>`
-
-Gera um desafio de código aleatório calibrado ao nível da trilha.
 
 ```
 /desafio Java
@@ -224,125 +271,42 @@ Gera um desafio de código aleatório calibrado ao nível da trilha.
 /desafio COBOL        ← tecnologia fora do JSON, usa nível Intermediário
 ```
 
-**Categorias sorteadas aleatoriamente:**
-- Algoritmos e Lógica
-- Estruturas de Dados
-- Manipulação de Strings
-- Operações com Arrays/Listas
-- Orientação a Objetos
-- Consumo de API / HTTP
-- Banco de Dados / Queries
-- Testes Unitários
-- Refatoração de Código
-- Mini Projeto Prático
-
-**Calibragem por nível:**
-
-| Nível | XP | Tempo |
-|---|---|---|
-| Básico | 500 XP | 30 min |
-| Intermediário | 1500 XP | 1h |
-| Avançado | 3000 XP | 2h |
-
----
-
 ### `/certificado <nome> <tecnologia>`
-
-Emite um certificado fictício em Markdown para o aluno.
 
 ```
 /certificado "Ana Lima" React
 /certificado "Carlos Souza" Python
-/certificado "Maria Santos" AWS
 ```
 
 **Formato do código de verificação:**
 ```
-DIO-{id em 4 dígitos}-{3 primeiras letras do nome sem acento}-{ano}
+DIO-{id em 4 dígitos}-{3 primeiras letras do nome}-{ano}
 
 Exemplos:
-  Ana Lima    → React  (id=4)  → DIO-0004-ANA-2025
-  Carlos Souza → Python (id=2) → DIO-0002-CAR-2025
+  Ana Lima     → React  (id=4)  → DIO-0004-ANA-2025
+  Carlos Souza → Python (id=2)  → DIO-0002-CAR-2025
 ```
 
 ---
 
 ## 🔌 MCP Server — API via Protocolo MCP
 
-O servidor MCP transforma as funcionalidades do projeto em ferramentas consumíveis por qualquer cliente compatível com o [Model Context Protocol](https://modelcontextprotocol.io).
-
-### Configuração atual (`.bob/mcp.json`)
-
-```json
-{
-  "mcpServers": {
-    "dio-mcp-server": {
-      "command": "node",
-      "args": ["C:\\caminho\\para\\mcp\\build\\index.js"]
-    }
-  }
-}
-```
-
-> ⚠️ Ajuste o caminho absoluto para o seu ambiente ao clonar o projeto.
-
 ### Ferramentas disponíveis
 
-#### `listar_trilhas`
-Lista todas as 30 trilhas em formato de tabela.
-
-```
-Entrada: (nenhuma)
-Saída:   tabela com ID, nome, tecnologia, nível e XP de cada trilha
-```
-
-#### `buscar_trilha`
-Retorna o plano completo de estudos de uma tecnologia.
-
-```
-Entrada: { "tecnologia": "React" }
-Saída:   plano de estudos com módulos, badges, lives e promoções
-```
-
-#### `gerar_desafio`
-Gera um desafio de código com enunciado, casos de teste e dicas.
-
-```
-Entrada: { "tecnologia": "Python", "categoria": "Algoritmos e Lógica" }
-         categoria é opcional — se omitida, é sorteada aleatoriamente
-Saída:   desafio formatado com enunciado, I/O e casos de teste
-```
-
-#### `gerar_certificado`
-Emite um certificado em Markdown com código de verificação único.
-
-```
-Entrada: { "nome": "Paulo Silva", "tecnologia": "React" }
-Saída:   certificado Markdown com DIO-0004-PAU-2025
-```
-
-### Reconstruir após alterações
-
-```bash
-cd mcp
-npm run build
-```
-
-O Bob recarrega o servidor automaticamente após a rebuild.
+| Ferramenta | Entrada | Saída |
+|---|---|---|
+| `listar_trilhas` | — | tabela com 30 trilhas |
+| `buscar_trilha` | `{ "tecnologia": "React" }` | plano de estudos completo |
+| `gerar_desafio` | `{ "tecnologia": "Python", "categoria": "..." }` | desafio com enunciado e casos de teste |
+| `gerar_certificado` | `{ "nome": "Ana Lima", "tecnologia": "React" }` | certificado Markdown com código único |
 
 ---
 
 ## ✅ Suite de Testes
 
-O projeto usa um runner de testes **100% vanilla Node.js** — sem Jest, Mocha ou qualquer framework externo.
-
-### Executar
-
 ```bash
 node tests/run-tests.js
 ```
-
-### Resultado
 
 ```
 ══════════════════════════════════════════════════
@@ -360,125 +324,54 @@ node tests/run-tests.js
 ══════════════════════════════════════════════════
 ```
 
-O relatório completo é gravado em `test-results.txt` a cada execução.
-
-### O que é testado
-
-| Suite | Cobertura |
-|---|---|
-| `helpers.test.js` | `loadTrilhas`, `findTrilha` (case, parcial, edge), `listTecnologias`, `gerarCodigoVerificacao`, `formatarDataCertificado`, `validateOutput*` |
-| `trilha.flow.test.js` | Busca exata/parcial/case-insensitive para 6 tecnologias + todas 30 trilhas do JSON + promoção ativa vs inativa |
-| `desafio.flow.test.js` | 5 tecnologias × 10 categorias + tecnologias desconhecidas + calibragem de XP por nível |
-| `certificado.flow.test.js` | 5 alunos × validação completa + formato de código + unicidade + 30 trilhas + branding |
-
----
-
-## 🧩 Exemplos de Uso
-
-### Fluxo completo de um aluno
-
-```
-1. Descobrir trilhas disponíveis:
-   /trilha Python
-
-2. Praticar com um desafio:
-   /desafio Python
-
-3. Emitir o certificado ao concluir:
-   /certificado "João Silva" Python
-```
-
-### Via MCP (integração programática)
-
-Qualquer cliente MCP pode chamar as ferramentas diretamente:
-
-```json
-{
-  "method": "tools/call",
-  "params": {
-    "name": "gerar_certificado",
-    "arguments": {
-      "nome": "Ana Lima",
-      "tecnologia": "React"
-    }
-  }
-}
-```
-
 ---
 
 ## 💡 Dicas de Uso com o Bob AI
 
-1. **Busca inteligente** — os slash commands aceitam termos parciais e não diferenciam maiúsculas: `docker`, `DOCKER`, `Docker` encontram a mesma trilha.
-
-2. **Encadeie os comandos** — use `/trilha` para estudar, `/desafio` para praticar e `/certificado` para concluir. O Bob entende o contexto entre as mensagens.
-
-3. **Peça variações de desafio** — execute `/desafio React` múltiplas vezes: a categoria é sorteada aleatoriamente a cada chamada.
-
-4. **MCP vs Slash Commands** — os slash commands são conversacionais (saída em texto no chat); as ferramentas MCP são programáticas (JSON de entrada/saída). Use MCP para integrar com outras aplicações.
-
-5. **Rebuild automático** — após editar `mcp/src/index.ts`, execute `npm run build` dentro de `mcp/` e o Bob recarrega o servidor sem reiniciar.
-
-6. **Adicione novas trilhas** — basta editar `data/trilhas.json` com o mesmo esquema. Todas as ferramentas leem o arquivo em tempo real; não é necessário recompilar.
+1. **Busca inteligente** — os slash commands aceitam termos parciais e não diferenciam maiúsculas.
+2. **Encadeie os comandos** — use `/trilha` para estudar, `/desafio` para praticar e `/certificado` para concluir.
+3. **Peça variações de desafio** — execute `/desafio React` múltiplas vezes; a categoria é sorteada a cada chamada.
+4. **MCP vs Slash Commands** — slash commands são conversacionais; ferramentas MCP são programáticas (JSON I/O).
+5. **Rebuild automático** — após editar `mcp/src/index.ts`, execute `npm run build` e o Bob recarrega o servidor.
 
 ---
 
 ## 🎓 Insights para Futuros Profissionais
 
-### Sobre IA como par de programação
-
-> Este projeto foi construído inteiramente por meio de prompts em linguagem natural. Cada seção abaixo descreve uma lição aprendida no processo.
-
 **1. Prompts iterativos produzem código incremental e rastreável**
-Cada funcionalidade foi pedida em uma mensagem separada. Isso cria um histórico claro de decisões e facilita revisão. Evite "mega-prompts" que pedem tudo de uma vez.
 
 **2. Especifique o formato de saída quando importa**
-Os templates nos arquivos `.bob/commands/*.md` mostram ao modelo exatamente qual Markdown gerar. Quanto mais preciso o template, mais consistente a saída.
 
 **3. Testes validam o que a IA produziu**
-A suite de 387 testes foi criada pelo próprio Bob para validar seu próprio trabalho. Isso é uma prática essencial: sempre peça à IA que escreva testes para o código que ela gera.
+A suite de 387 testes foi criada pelo próprio Bob para validar seu próprio trabalho.
 
 **4. MCP como camada de integração**
-O Model Context Protocol transforma o Bob em uma plataforma extensível. Em vez de ensinar o modelo com prompts, você registra ferramentas com esquemas Zod — o modelo sabe exatamente o que pode e o que cada parâmetro significa.
+O Model Context Protocol transforma o Bob em uma plataforma extensível com ferramentas tipadas.
 
 **5. Separe dados de lógica**
-O `data/trilhas.json` é a única fonte de verdade. Os builders de output consomem esse JSON sem hardcode. Isso permite adicionar trilhas sem tocar no código.
+O `data/trilhas.json` é a única fonte de verdade — adicionar trilhas não exige recompilação.
 
 **6. `.bobignore` protege dados sensíveis**
-O Bob AI não envia arquivos listados no `.bobignore` para o contexto. Trate-o como `.gitignore` para segredos, certificados, caches e builds.
-
-### Arquitetura recomendada para projetos similares
-
-```
-Dados (JSON/DB)
-    ↓
-Helpers (funções puras, testáveis)
-    ↓
-Builders (montam o output)
-    ↓
-Transporte (Slash Command ou MCP Tool)
-    ↓
-Usuário / Cliente
-```
-
-Esta separação torna cada camada testável de forma isolada — exatamente como a suite de testes deste projeto foi estruturada.
+Trate-o como `.gitignore` para segredos, certificados, caches e builds.
 
 ---
 
 ## 📜 Histórico de Prompts
 
-A tabela abaixo documenta a conversa completa com o Bob AI que gerou este projeto, em ordem cronológica.
-
 | # | Prompt do Usuário | O que foi criado |
 |---|---|---|
 | 1 | *"crie na raiz do projeto um arquivo .bobignore..."* | `.bobignore` com regras para `node_modules`, `.env`, certificados, caches e builds |
 | 2 | *"crie slash commands chamado /trilha... /desafio... /certificado..."* | `.bob/commands/trilha.md`, `desafio.md`, `certificado.md` com templates completos |
-| 3 | *"crie arquivos de testes unitarios e teste de fluxo para atingir uma cobertura de 70%..."* | `tests/` com runner customizado, helpers, 4 suites e 387 casos de teste — resultado: 100% |
-| 4 | *"poderia executar o slash command /trilhas"* | Execução demonstrativa do `/trilha` — sistema perguntou a tecnologia |
-| 5 | *"React"* | Retorno do plano completo da **Formação React Developer** com 10 módulos, 4 badges, 1 live e promoção de 25% |
-| 6 | *"gere para mim o certificado com o /certificado Paulo Silva React"* | Certificado Markdown completo com `DIO-0004-PAU-2025` e badges da trilha React |
-| 7 | *"crie um mcp server do projeto... para que futuramente pessoas possam acessar por meio de um servidor https ou via API..."* | `mcp/` com TypeScript, 4 ferramentas MCP, build limpo e registro em `.bob/mcp.json` |
-| 8 | *"gostaria que você documentasse todo o projeto até o momento..."* | Este `README.md` |
+| 3 | *"crie arquivos de testes unitarios e teste de fluxo..."* | `tests/` com runner customizado, 4 suites e 387 casos — 100% cobertura |
+| 4 | *"poderia executar o slash command /trilhas"* | Execução demonstrativa do `/trilha` |
+| 5 | *"React"* | Retorno do plano completo da **Formação React Developer** |
+| 6 | *"gere para mim o certificado com o /certificado Paulo Silva React"* | Certificado com `DIO-0004-PAU-2025` |
+| 7 | *"crie um mcp server do projeto..."* | `mcp/` com TypeScript, 4 ferramentas MCP e registro em `.bob/mcp.json` |
+| 8 | *"gostaria que você documentasse todo o projeto..."* | `README.md` completo |
+| 9 | *"podemos estar criando uma nova branch para o front-end?"* | Branch `feature/front-end` criada |
+| 10 | *"preciso que crie um front end com base no que temos hoje..."* | `frontend/` com HTML + CSS + JS vanilla, dark mode, todas as 3 views |
+| 11 | *"melhorando desafios e certificado... projeto em react mais tailwind..."* | `frontend-react/` — React 19 + Tailwind v4 + Vite 8, busca com botão, playgrounds online, certificado PDF + compartilhamento |
+| 12 | *"realizando a atualização da documentação e hospedando no vercel"* | `README.md` atualizado + `vercel.json` + deploy no Vercel |
 
 ---
 
@@ -492,6 +385,8 @@ A tabela abaixo documenta a conversa completa com o Bob AI que gerou este projet
 
 Feito com 🤖 **IBM Bob AI** + ☕ café
 
-**#DIO #BobAI #MCP #DevEmCrescimento**
+🌐 [projeto-bob-dio.vercel.app](https://projeto-bob-dio.vercel.app)
+
+**#DIO #BobAI #MCP #React #Tailwind #Vercel #DevEmCrescimento**
 
 </div>
