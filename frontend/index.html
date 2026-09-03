@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DIO — Plataforma de Trilhas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🤖</span>
+        <span class="logo-text">DIO <span class="logo-accent">Trilhas</span></span>
+      </div>
+      <nav class="nav">
+        <button class="nav-btn active" data-view="trilhas">📚 Trilhas</button>
+        <button class="nav-btn" data-view="desafio">⚔️ Desafio</button>
+        <button class="nav-btn" data-view="certificado">🏆 Certificado</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- VIEW: TRILHAS -->
+    <section id="view-trilhas" class="view active">
+      <div class="page-title">
+        <h1>Trilhas de Aprendizado</h1>
+        <p>30 trilhas disponíveis — do básico ao avançado</p>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="🔍  Buscar trilha… (ex: React, Python, AWS)" />
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn active" data-nivel="all">Todos</button>
+        <button class="filter-btn" data-nivel="Básico">Básico</button>
+        <button class="filter-btn" data-nivel="Intermediário">Intermediário</button>
+        <button class="filter-btn" data-nivel="Avançado">Avançado</button>
+      </div>
+
+      <div id="trilhas-grid" class="trilhas-grid"></div>
+    </section>
+
+    <!-- VIEW: DETALHE TRILHA (modal interno) -->
+    <section id="view-detalhe" class="view">
+      <button class="back-btn" id="back-to-trilhas">← Voltar</button>
+      <div id="detalhe-content"></div>
+    </section>
+
+    <!-- VIEW: DESAFIO -->
+    <section id="view-desafio" class="view">
+      <div class="page-title">
+        <h1>⚔️ Gerar Desafio de Código</h1>
+        <p>Selecione uma tecnologia e a categoria para receber um desafio calibrado ao nível da trilha.</p>
+      </div>
+      <div class="form-card">
+        <label for="desafio-tecnologia">Tecnologia</label>
+        <select id="desafio-tecnologia"></select>
+
+        <label for="desafio-categoria">Categoria <span class="optional">(opcional)</span></label>
+        <select id="desafio-categoria">
+          <option value="">🎲 Sortear aleatoriamente</option>
+          <option>Algoritmos e Lógica</option>
+          <option>Estruturas de Dados</option>
+          <option>Manipulação de Strings</option>
+          <option>Operações com Arrays/Listas</option>
+          <option>Orientação a Objetos</option>
+          <option>Consumo de API / HTTP</option>
+          <option>Banco de Dados / Queries</option>
+          <option>Testes Unitários</option>
+          <option>Refatoração de Código</option>
+          <option>Mini Projeto Prático</option>
+        </select>
+
+        <button class="btn-primary" id="btn-gerar-desafio">⚔️ Gerar Desafio</button>
+      </div>
+      <div id="desafio-output" class="output-card hidden"></div>
+    </section>
+
+    <!-- VIEW: CERTIFICADO -->
+    <section id="view-certificado" class="view">
+      <div class="page-title">
+        <h1>🏆 Emitir Certificado</h1>
+        <p>Preencha os dados para gerar seu certificado fictício da trilha concluída.</p>
+      </div>
+      <div class="form-card">
+        <label for="cert-nome">Seu nome completo</label>
+        <input type="text" id="cert-nome" placeholder="Ex: Ana Lima" />
+
+        <label for="cert-tecnologia">Tecnologia</label>
+        <select id="cert-tecnologia"></select>
+
+        <button class="btn-primary" id="btn-gerar-cert">🏆 Emitir Certificado</button>
+      </div>
+      <div id="cert-output" class="output-card hidden"></div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Feito com 🤖 <strong>IBM Bob AI</strong> + ☕ café &nbsp;·&nbsp; #DIO #BobAI #MCP
+  </footer>
+
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
