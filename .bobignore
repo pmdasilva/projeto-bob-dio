@@ -1,0 +1,50 @@
+# Dependencias
+node_modules/
+
+# Variaveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.cert
+*.crt
+*.csr
+
+# Cache e progresso
+data/cache-progress/
+.cache/
+.parcel-cache/
+.npm/
+.pnpm-store/
+
+# Certificados gerados
+docs/certificados-emitidos/
+certificados/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Builds e compilacoes
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# Arquivos de cobertura e testes
+coverage/
+.nyc_output/
+*.lcov
+
+# Configuracoes de IDE e sistema
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
