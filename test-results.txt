@@ -1,0 +1,436 @@
+════════════════════════════════════════════════════════════════════════════════
+  DIO — RELATÓRIO DE TESTES DOS SLASH COMMANDS
+  Gerado em: 03/09/2026, 08:22:07
+════════════════════════════════════════════════════════════════════════════════
+
+  COMANDOS TESTADOS:
+    /trilha      — Consulta de trilha de estudos
+    /desafio     — Geração de desafio de código aleatório
+    /certificado — Emissão de certificado fictício em Markdown
+
+════════════════════════════════════════════════════════════════════════════════
+
+  SUITE: Unitários — helpers
+  Aprovados: 51  |  Reprovados: 0  |  Total: 51  |  Cobertura: 100.0%
+────────────────────────────────────────────────────────────────────────────────
+  ✔ [PASS] loadTrilhas retorna um array
+  ✔ [PASS] loadTrilhas retorna 30 trilhas
+  ✔ [PASS] Primeira trilha tem campo "id"
+  ✔ [PASS] Primeira trilha tem campo "tecnologia"
+  ✔ [PASS] Primeira trilha tem campo "badges_disponiveis"
+  ✔ [PASS] Primeira trilha tem campo "lives_ao_vivo"
+  ✔ [PASS] Primeira trilha tem campo "promocoes"
+  ✔ [PASS] findTrilha encontra Java
+  ✔ [PASS] findTrilha encontra Python
+  ✔ [PASS] findTrilha encontra React
+  ✔ [PASS] findTrilha encontra AWS
+  ✔ [PASS] findTrilha retorna null para tecnologia inexistente
+  ✔ [PASS] findTrilha aceita busca em minúsculo "java"
+  ✔ [PASS] findTrilha aceita busca em maiúsculo "JAVA"
+  ✔ [PASS] findTrilha aceita busca mista "jAvA"
+  ✔ [PASS] findTrilha aceita busca parcial "node"
+  ✔ [PASS] findTrilha aceita busca parcial "angular"
+  ✔ [PASS] findTrilha aceita busca parcial "machine"
+  ✔ [PASS] findTrilha Java retorna id=1
+  ✔ [PASS] findTrilha Python retorna nivel=Básico
+  ✔ [PASS] findTrilha React retorna numero_de_modulos=10
+  ✔ [PASS] findTrilha com null retorna null
+  ✔ [PASS] findTrilha com string vazia retorna null
+  ✔ [PASS] findTrilha com número retorna null
+  ✔ [PASS] listTecnologias retorna array
+  ✔ [PASS] listTecnologias retorna 30 itens
+  ✔ [PASS] listTecnologias contém "Java"
+  ✔ [PASS] listTecnologias contém "Python"
+  ✔ [PASS] listTecnologias contém "AWS"
+  ✔ [PASS] listTecnologias não inclui campos que não sejam string
+  ✔ [PASS] Código id=1, nome="Ana Lima", ano=2025
+  ✔ [PASS] Código id=4, nome="Carlos Souza", ano=2025
+  ✔ [PASS] Código id=10, nome="Bob", ano=2024
+  ✔ [PASS] Código id=100, nome="Zé", ano=2025
+  ✔ [PASS] Código sempre começa com DIO-
+  ✔ [PASS] Formata data como "15 de janeiro de 2025"
+  ✔ [PASS] Formata data como "04 de julho de 2025"
+  ✔ [PASS] Formata data como "31 de dezembro de 2024"
+  ✔ [PASS] formatarDataCertificado sem argumento retorna string não vazia
+  ✔ [PASS] validateTrilhaOutput aceita output válido
+  ✔ [PASS] validateTrilhaOutput: sem campos faltando
+  ✔ [PASS] validateTrilhaOutput rejeita output inválido
+  ✔ [PASS] validateTrilhaOutput reporta campos faltando
+  ✔ [PASS] validateDesafioOutput aceita output válido
+  ✔ [PASS] validateDesafioOutput: sem campos faltando
+  ✔ [PASS] validateDesafioOutput rejeita output inválido
+  ✔ [PASS] validateDesafioOutput reporta campos faltando
+  ✔ [PASS] validateCertificadoOutput aceita output válido
+  ✔ [PASS] validateCertificadoOutput: sem campos faltando
+  ✔ [PASS] validateCertificadoOutput rejeita output inválido
+  ✔ [PASS] validateCertificadoOutput reporta campos faltando
+
+  SUITE: Fluxo — /trilha
+  Aprovados: 125  |  Reprovados: 0  |  Total: 125  |  Cobertura: 100.0%
+────────────────────────────────────────────────────────────────────────────────
+  ✔ [PASS] /trilha Java: trilha encontrada no JSON
+  ✔ [PASS] /trilha Java: output contém todas as seções obrigatórias
+  ✔ [PASS] /trilha Java: output menciona a tecnologia
+  ✔ [PASS] /trilha Java: output menciona o nível
+  ✔ [PASS] /trilha Java: output contém XP total
+  ✔ [PASS] /trilha Java: output contém quantidade de módulos
+  ✔ [PASS] /trilha Java: badge "Java Fundamentals" presente no output
+  ✔ [PASS] /trilha Java: badge "OOP Master" presente no output
+  ✔ [PASS] /trilha Java: badge "Spring Boot Hero" presente no output
+  ✔ [PASS] /trilha Java: badge "Java Developer" presente no output
+  ✔ [PASS] /trilha Java: live "Spring Boot do Zero ao Deploy" presente no output
+  ✔ [PASS] /trilha Java: live "Java e Microsserviços na Prática" presente no output
+  ✔ [PASS] /trilha Java: tabela tem exatamente 8 módulos
+  ✔ [PASS] /trilha Python: trilha encontrada no JSON
+  ✔ [PASS] /trilha Python: output contém todas as seções obrigatórias
+  ✔ [PASS] /trilha Python: output menciona a tecnologia
+  ✔ [PASS] /trilha Python: output menciona o nível
+  ✔ [PASS] /trilha Python: output contém XP total
+  ✔ [PASS] /trilha Python: output contém quantidade de módulos
+  ✔ [PASS] /trilha Python: badge "Python Essentials" presente no output
+  ✔ [PASS] /trilha Python: badge "Data Structures with Python" presente no output
+  ✔ [PASS] /trilha Python: badge "Python Developer" presente no output
+  ✔ [PASS] /trilha Python: live "Python para Iniciantes" presente no output
+  ✔ [PASS] /trilha Python: tabela tem exatamente 7 módulos
+  ✔ [PASS] /trilha React: trilha encontrada no JSON
+  ✔ [PASS] /trilha React: output contém todas as seções obrigatórias
+  ✔ [PASS] /trilha React: output menciona a tecnologia
+  ✔ [PASS] /trilha React: output menciona o nível
+  ✔ [PASS] /trilha React: output contém XP total
+  ✔ [PASS] /trilha React: output contém quantidade de módulos
+  ✔ [PASS] /trilha React: badge "React Basics" presente no output
+  ✔ [PASS] /trilha React: badge "React Hooks Master" presente no output
+  ✔ [PASS] /trilha React: badge "Redux Expert" presente no output
+  ✔ [PASS] /trilha React: badge "React Developer" presente no output
+  ✔ [PASS] /trilha React: live "React 19 - O que mudou?" presente no output
+  ✔ [PASS] /trilha React: tabela tem exatamente 10 módulos
+  ✔ [PASS] /trilha Angular: trilha encontrada no JSON
+  ✔ [PASS] /trilha Angular: output contém todas as seções obrigatórias
+  ✔ [PASS] /trilha Angular: output menciona a tecnologia
+  ✔ [PASS] /trilha Angular: output menciona o nível
+  ✔ [PASS] /trilha Angular: output contém XP total
+  ✔ [PASS] /trilha Angular: output contém quantidade de módulos
+  ✔ [PASS] /trilha Angular: badge "TypeScript Basics" presente no output
+  ✔ [PASS] /trilha Angular: badge "Angular Components" presente no output
+  ✔ [PASS] /trilha Angular: badge "Angular RxJS Expert" presente no output
+  ✔ [PASS] /trilha Angular: badge "Frontend Angular Dev" presente no output
+  ✔ [PASS] /trilha Angular: live "Angular 17 - Novidades e Boas Práticas" presente no output
+  ✔ [PASS] /trilha Angular: live "Consumindo APIs REST com Angular" presente no output
+  ✔ [PASS] /trilha Angular: tabela tem exatamente 9 módulos
+  ✔ [PASS] /trilha Node.js: trilha encontrada no JSON
+  ✔ [PASS] /trilha Node.js: output contém todas as seções obrigatórias
+  ✔ [PASS] /trilha Node.js: output menciona a tecnologia
+  ✔ [PASS] /trilha Node.js: output menciona o nível
+  ✔ [PASS] /trilha Node.js: output contém XP total
+  ✔ [PASS] /trilha Node.js: output contém quantidade de módulos
+  ✔ [PASS] /trilha Node.js: badge "Node.js Fundamentals" presente no output
+  ✔ [PASS] /trilha Node.js: badge "Express API Builder" presente no output
+  ✔ [PASS] /trilha Node.js: badge "Node.js Developer" presente no output
+  ✔ [PASS] /trilha Node.js: live "APIs RESTful com Node.js e Express" presente no output
+  ✔ [PASS] /trilha Node.js: live "Autenticação JWT com Node.js" presente no output
+  ✔ [PASS] /trilha Node.js: tabela tem exatamente 8 módulos
+  ✔ [PASS] /trilha AWS: trilha encontrada no JSON
+  ✔ [PASS] /trilha AWS: output contém todas as seções obrigatórias
+  ✔ [PASS] /trilha AWS: output menciona a tecnologia
+  ✔ [PASS] /trilha AWS: output menciona o nível
+  ✔ [PASS] /trilha AWS: output contém XP total
+  ✔ [PASS] /trilha AWS: output contém quantidade de módulos
+  ✔ [PASS] /trilha AWS: badge "Cloud Basics" presente no output
+  ✔ [PASS] /trilha AWS: badge "AWS Services Explorer" presente no output
+  ✔ [PASS] /trilha AWS: badge "AWS Cloud Practitioner" presente no output
+  ✔ [PASS] /trilha AWS: live "Primeiros Passos na AWS" presente no output
+  ✔ [PASS] /trilha AWS: tabela tem exatamente 6 módulos
+  ✔ [PASS] /trilha case-insensitive: "java" encontra Java
+  ✔ [PASS] /trilha case-insensitive: "JAVA" encontra Java
+  ✔ [PASS] /trilha case-insensitive: "jAvA" encontra Java
+  ✔ [PASS] /trilha case-insensitive: "Java" encontra Java
+  ✔ [PASS] /trilha case-insensitive: "python" encontra Python
+  ✔ [PASS] /trilha case-insensitive: "PYTHON" encontra Python
+  ✔ [PASS] /trilha case-insensitive: "pYtHoN" encontra Python
+  ✔ [PASS] /trilha busca parcial: "node" encontra trilha de "Node.js"
+  ✔ [PASS] /trilha busca parcial: "machine" encontra trilha de "Python / Machine Learning"
+  ✔ [PASS] /trilha busca parcial: "docker" encontra trilha de "DevOps / Containers"
+  ✔ [PASS] /trilha busca parcial: "flutter" encontra trilha de "Flutter / Dart"
+  ✔ [PASS] /trilha busca parcial: "kotlin" encontra trilha de "Kotlin / Android"
+  ✔ [PASS] /trilha busca parcial: "azure" encontra trilha de "Microsoft Azure"
+  ✔ [PASS] /trilha busca parcial: "spark" encontra trilha de "Python / Spark / Hadoop"
+  ✔ [PASS] /trilha busca parcial: "sql" encontra trilha de "SQL / Banco de Dados"
+  ✔ [PASS] /trilha "COBOL": retorna null (não encontrada)
+  ✔ [PASS] /trilha "Pascal": retorna null (não encontrada)
+  ✔ [PASS] /trilha "TecnologiaFake999": retorna null (não encontrada)
+  ✔ [PASS] /trilha "XYZ": retorna null (não encontrada)
+  ✔ [PASS] /trilha not-found: listTecnologias retorna array não vazio
+  ✔ [PASS] /trilha not-found: listTecnologias tem 30 entradas
+  ✔ [PASS] /trilha ALL: trilha id=1 "Formação Java Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=2 "Formação Python Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=3 "Formação Angular Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=4 "Formação React Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=5 "Formação Node.js Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=6 "Formação Machine Learning Specialist" output válido
+  ✔ [PASS] /trilha ALL: trilha id=7 "Formação AWS Cloud Practitioner" output válido
+  ✔ [PASS] /trilha ALL: trilha id=8 "Formação Azure Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=9 "Formação Docker e Kubernetes" output válido
+  ✔ [PASS] /trilha ALL: trilha id=10 "Formação SQL e Banco de Dados" output válido
+  ✔ [PASS] /trilha ALL: trilha id=11 "Formação Flutter Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=12 "Formação Kotlin Android Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=13 "Formação iOS Swift Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=14 "Formação DevOps e CI/CD" output válido
+  ✔ [PASS] /trilha ALL: trilha id=15 "Formação Data Engineer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=16 "Formação C# .NET Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=17 "Formação Go Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=18 "Formação Rust Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=19 "Formação Cybersecurity Specialist" output válido
+  ✔ [PASS] /trilha ALL: trilha id=20 "Formação Blockchain Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=21 "Formação Data Science com Python" output válido
+  ✔ [PASS] /trilha ALL: trilha id=22 "Formação Game Developer com Unity" output válido
+  ✔ [PASS] /trilha ALL: trilha id=23 "Formação UX/UI Designer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=24 "Formação PHP Laravel Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=25 "Formação Vue.js Developer" output válido
+  ✔ [PASS] /trilha ALL: trilha id=26 "Formação Inteligência Artificial Generativa" output válido
+  ✔ [PASS] /trilha ALL: trilha id=27 "Formação TypeScript Full Stack" output válido
+  ✔ [PASS] /trilha ALL: trilha id=28 "Formação Cloud Native com Google Cloud" output válido
+  ✔ [PASS] /trilha ALL: trilha id=29 "Formação Scrum e Gestão Ágil" output válido
+  ✔ [PASS] /trilha ALL: trilha id=30 "Formação Robótica e IoT com Python" output válido
+  ✔ [PASS] /trilha promoção: trilha "Formação Java Developer" mostra desconto 20%
+  ✔ [PASS] /trilha sem promoção: trilha "Formação Angular Developer" mostra aviso de sem promoção
+
+  SUITE: Fluxo — /desafio
+  Aprovados: 76  |  Reprovados: 0  |  Total: 76  |  Cobertura: 100.0%
+────────────────────────────────────────────────────────────────────────────────
+  ✔ [PASS] /desafio Java: output contém todas as seções obrigatórias
+  ✔ [PASS] /desafio Java: menciona a tecnologia no título
+  ✔ [PASS] /desafio Java: nível correto "Intermediário"
+  ✔ [PASS] /desafio Java: XP correto "1500"
+  ✔ [PASS] /desafio Java: tempo correto "1h"
+  ✔ [PASS] /desafio Java: categoria "Algoritmos e Lógica" presente
+  ✔ [PASS] /desafio Python: output contém todas as seções obrigatórias
+  ✔ [PASS] /desafio Python: menciona a tecnologia no título
+  ✔ [PASS] /desafio Python: nível correto "Básico"
+  ✔ [PASS] /desafio Python: XP correto "500"
+  ✔ [PASS] /desafio Python: tempo correto "30 min"
+  ✔ [PASS] /desafio Python: categoria "Algoritmos e Lógica" presente
+  ✔ [PASS] /desafio React: output contém todas as seções obrigatórias
+  ✔ [PASS] /desafio React: menciona a tecnologia no título
+  ✔ [PASS] /desafio React: nível correto "Intermediário"
+  ✔ [PASS] /desafio React: XP correto "1500"
+  ✔ [PASS] /desafio React: tempo correto "1h"
+  ✔ [PASS] /desafio React: categoria "Algoritmos e Lógica" presente
+  ✔ [PASS] /desafio Rust: output contém todas as seções obrigatórias
+  ✔ [PASS] /desafio Rust: menciona a tecnologia no título
+  ✔ [PASS] /desafio Rust: nível correto "Avançado"
+  ✔ [PASS] /desafio Rust: XP correto "3000"
+  ✔ [PASS] /desafio Rust: tempo correto "2h"
+  ✔ [PASS] /desafio Rust: categoria "Algoritmos e Lógica" presente
+  ✔ [PASS] /desafio AWS: output contém todas as seções obrigatórias
+  ✔ [PASS] /desafio AWS: menciona a tecnologia no título
+  ✔ [PASS] /desafio AWS: nível correto "Básico"
+  ✔ [PASS] /desafio AWS: XP correto "500"
+  ✔ [PASS] /desafio AWS: tempo correto "30 min"
+  ✔ [PASS] /desafio AWS: categoria "Algoritmos e Lógica" presente
+  ✔ [PASS] /desafio COBOL: trilha não encontrada no JSON (null)
+  ✔ [PASS] /desafio COBOL (desconhecido): output ainda contém seções obrigatórias
+  ✔ [PASS] /desafio COBOL (desconhecido): nível padrão "Intermediário"
+  ✔ [PASS] /desafio COBOL (desconhecido): XP padrão "1500"
+  ✔ [PASS] /desafio Pascal: trilha não encontrada no JSON (null)
+  ✔ [PASS] /desafio Pascal (desconhecido): output ainda contém seções obrigatórias
+  ✔ [PASS] /desafio Pascal (desconhecido): nível padrão "Intermediário"
+  ✔ [PASS] /desafio Pascal (desconhecido): XP padrão "1500"
+  ✔ [PASS] /desafio Assembly: trilha não encontrada no JSON (null)
+  ✔ [PASS] /desafio Assembly (desconhecido): output ainda contém seções obrigatórias
+  ✔ [PASS] /desafio Assembly (desconhecido): nível padrão "Intermediário"
+  ✔ [PASS] /desafio Assembly (desconhecido): XP padrão "1500"
+  ✔ [PASS] /desafio FORTRAN: trilha não encontrada no JSON (null)
+  ✔ [PASS] /desafio FORTRAN (desconhecido): output ainda contém seções obrigatórias
+  ✔ [PASS] /desafio FORTRAN (desconhecido): nível padrão "Intermediário"
+  ✔ [PASS] /desafio FORTRAN (desconhecido): XP padrão "1500"
+  ✔ [PASS] /desafio Python: categoria "Algoritmos e Lógica" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Algoritmos e Lógica" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Estruturas de Dados" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Estruturas de Dados" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Manipulação de Strings" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Manipulação de Strings" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Operações com Arrays/Listas" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Operações com Arrays/Listas" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Orientação a Objetos" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Orientação a Objetos" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Consumo de API / HTTP" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Consumo de API / HTTP" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Banco de Dados / Queries" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Banco de Dados / Queries" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Testes Unitários" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Testes Unitários" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Refatoração de Código" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Refatoração de Código" gera output válido
+  ✔ [PASS] /desafio Python: categoria "Mini Projeto Prático" aparece no output
+  ✔ [PASS] /desafio Python: categoria "Mini Projeto Prático" gera output válido
+  ✔ [PASS] /desafio Java: tabela de casos de teste presente
+  ✔ [PASS] /desafio Java: tabela tem pelo menos 3 linhas (| 1 |)
+  ✔ [PASS] /desafio Java: tabela tem linha 2 (| 2 |)
+  ✔ [PASS] /desafio Java: tabela tem linha 3 (| 3 |)
+  ✔ [PASS] /desafio XP calibrado: nível "Básico" gera XP=500
+  ✔ [PASS] /desafio XP calibrado: nível "Intermediário" gera XP=1500
+  ✔ [PASS] /desafio XP calibrado: nível "Avançado" gera XP=3000
+  ✔ [PASS] /desafio React: seção de dicas presente
+  ✔ [PASS] /desafio React: orientação de /certificado no rodapé
+  ✔ [PASS] /desafio React: orientação de revisão no rodapé
+
+  SUITE: Fluxo — /certificado
+  Aprovados: 135  |  Reprovados: 0  |  Total: 135  |  Cobertura: 100.0%
+────────────────────────────────────────────────────────────────────────────────
+  ✔ [PASS] /certificado Ana Lima/Java: trilha encontrada
+  ✔ [PASS] /certificado Ana Lima/Java: output contém todas as seções obrigatórias
+  ✔ [PASS] /certificado Ana Lima/Java: nome em maiúsculo
+  ✔ [PASS] /certificado Ana Lima/Java: nome da trilha
+  ✔ [PASS] /certificado Ana Lima/Java: tecnologia
+  ✔ [PASS] /certificado Ana Lima/Java: nível
+  ✔ [PASS] /certificado Ana Lima/Java: XP conquistado
+  ✔ [PASS] /certificado Ana Lima/Java: módulos concluídos
+  ✔ [PASS] /certificado Ana Lima/Java: código de verificação "DIO-0001-ANA-2025"
+  ✔ [PASS] /certificado Ana Lima/Java: data de conclusão
+  ✔ [PASS] /certificado Ana Lima/Java: badge "Java Fundamentals"
+  ✔ [PASS] /certificado Ana Lima/Java: badge "OOP Master"
+  ✔ [PASS] /certificado Ana Lima/Java: badge "Spring Boot Hero"
+  ✔ [PASS] /certificado Ana Lima/Java: badge "Java Developer"
+  ✔ [PASS] /certificado Ana Lima/Java: mensagem de parabéns
+  ✔ [PASS] /certificado Ana Lima/Java: hashtag #DIO
+  ✔ [PASS] /certificado Ana Lima/Java: hashtag #DevEmCrescimento
+  ✔ [PASS] /certificado Carlos Souza/Python: trilha encontrada
+  ✔ [PASS] /certificado Carlos Souza/Python: output contém todas as seções obrigatórias
+  ✔ [PASS] /certificado Carlos Souza/Python: nome em maiúsculo
+  ✔ [PASS] /certificado Carlos Souza/Python: nome da trilha
+  ✔ [PASS] /certificado Carlos Souza/Python: tecnologia
+  ✔ [PASS] /certificado Carlos Souza/Python: nível
+  ✔ [PASS] /certificado Carlos Souza/Python: XP conquistado
+  ✔ [PASS] /certificado Carlos Souza/Python: módulos concluídos
+  ✔ [PASS] /certificado Carlos Souza/Python: código de verificação "DIO-0002-CAR-2025"
+  ✔ [PASS] /certificado Carlos Souza/Python: data de conclusão
+  ✔ [PASS] /certificado Carlos Souza/Python: badge "Python Essentials"
+  ✔ [PASS] /certificado Carlos Souza/Python: badge "Data Structures with Python"
+  ✔ [PASS] /certificado Carlos Souza/Python: badge "Python Developer"
+  ✔ [PASS] /certificado Carlos Souza/Python: mensagem de parabéns
+  ✔ [PASS] /certificado Carlos Souza/Python: hashtag #DIO
+  ✔ [PASS] /certificado Carlos Souza/Python: hashtag #DevEmCrescimento
+  ✔ [PASS] /certificado Maria Santos/React: trilha encontrada
+  ✔ [PASS] /certificado Maria Santos/React: output contém todas as seções obrigatórias
+  ✔ [PASS] /certificado Maria Santos/React: nome em maiúsculo
+  ✔ [PASS] /certificado Maria Santos/React: nome da trilha
+  ✔ [PASS] /certificado Maria Santos/React: tecnologia
+  ✔ [PASS] /certificado Maria Santos/React: nível
+  ✔ [PASS] /certificado Maria Santos/React: XP conquistado
+  ✔ [PASS] /certificado Maria Santos/React: módulos concluídos
+  ✔ [PASS] /certificado Maria Santos/React: código de verificação "DIO-0004-MAR-2025"
+  ✔ [PASS] /certificado Maria Santos/React: data de conclusão
+  ✔ [PASS] /certificado Maria Santos/React: badge "React Basics"
+  ✔ [PASS] /certificado Maria Santos/React: badge "React Hooks Master"
+  ✔ [PASS] /certificado Maria Santos/React: badge "Redux Expert"
+  ✔ [PASS] /certificado Maria Santos/React: badge "React Developer"
+  ✔ [PASS] /certificado Maria Santos/React: mensagem de parabéns
+  ✔ [PASS] /certificado Maria Santos/React: hashtag #DIO
+  ✔ [PASS] /certificado Maria Santos/React: hashtag #DevEmCrescimento
+  ✔ [PASS] /certificado Joao Pedro/AWS: trilha encontrada
+  ✔ [PASS] /certificado Joao Pedro/AWS: output contém todas as seções obrigatórias
+  ✔ [PASS] /certificado Joao Pedro/AWS: nome em maiúsculo
+  ✔ [PASS] /certificado Joao Pedro/AWS: nome da trilha
+  ✔ [PASS] /certificado Joao Pedro/AWS: tecnologia
+  ✔ [PASS] /certificado Joao Pedro/AWS: nível
+  ✔ [PASS] /certificado Joao Pedro/AWS: XP conquistado
+  ✔ [PASS] /certificado Joao Pedro/AWS: módulos concluídos
+  ✔ [PASS] /certificado Joao Pedro/AWS: código de verificação "DIO-0007-JOA-2025"
+  ✔ [PASS] /certificado Joao Pedro/AWS: data de conclusão
+  ✔ [PASS] /certificado Joao Pedro/AWS: badge "Cloud Basics"
+  ✔ [PASS] /certificado Joao Pedro/AWS: badge "AWS Services Explorer"
+  ✔ [PASS] /certificado Joao Pedro/AWS: badge "AWS Cloud Practitioner"
+  ✔ [PASS] /certificado Joao Pedro/AWS: mensagem de parabéns
+  ✔ [PASS] /certificado Joao Pedro/AWS: hashtag #DIO
+  ✔ [PASS] /certificado Joao Pedro/AWS: hashtag #DevEmCrescimento
+  ✔ [PASS] /certificado Beatriz/Angular: trilha encontrada
+  ✔ [PASS] /certificado Beatriz/Angular: output contém todas as seções obrigatórias
+  ✔ [PASS] /certificado Beatriz/Angular: nome em maiúsculo
+  ✔ [PASS] /certificado Beatriz/Angular: nome da trilha
+  ✔ [PASS] /certificado Beatriz/Angular: tecnologia
+  ✔ [PASS] /certificado Beatriz/Angular: nível
+  ✔ [PASS] /certificado Beatriz/Angular: XP conquistado
+  ✔ [PASS] /certificado Beatriz/Angular: módulos concluídos
+  ✔ [PASS] /certificado Beatriz/Angular: código de verificação "DIO-0003-BEA-2025"
+  ✔ [PASS] /certificado Beatriz/Angular: data de conclusão
+  ✔ [PASS] /certificado Beatriz/Angular: badge "TypeScript Basics"
+  ✔ [PASS] /certificado Beatriz/Angular: badge "Angular Components"
+  ✔ [PASS] /certificado Beatriz/Angular: badge "Angular RxJS Expert"
+  ✔ [PASS] /certificado Beatriz/Angular: badge "Frontend Angular Dev"
+  ✔ [PASS] /certificado Beatriz/Angular: mensagem de parabéns
+  ✔ [PASS] /certificado Beatriz/Angular: hashtag #DIO
+  ✔ [PASS] /certificado Beatriz/Angular: hashtag #DevEmCrescimento
+  ✔ [PASS] /certificado código: trilha id=1 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=2 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=3 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=4 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=5 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=6 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=7 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=8 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=9 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: trilha id=10 segue formato DIO-XXXX-XXX-AAAA
+  ✔ [PASS] /certificado código: ids diferentes → códigos diferentes
+  ✔ [PASS] /certificado código: nomes diferentes → códigos diferentes
+  ✔ [PASS] /certificado trilha inexistente: findTrilha retorna null
+  ✔ [PASS] /certificado trilha null: buildCertificadoOutput lança erro
+  ✔ [PASS] /certificado maiúsculo: "ana lima" → "ANA LIMA"
+  ✔ [PASS] /certificado maiúsculo: "ANA LIMA" → "ANA LIMA"
+  ✔ [PASS] /certificado maiúsculo: "Ana Lima" → "ANA LIMA"
+  ✔ [PASS] /certificado maiúsculo: "aNA lIMA" → "ANA LIMA"
+  ✔ [PASS] /certificado maiúsculo: "Leonardo da Silva Ferreira" → "LEONARDO DA SILVA FERREIRA"
+  ✔ [PASS] /certificado ALL: trilha id=1 "Formação Java Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=2 "Formação Python Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=3 "Formação Angular Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=4 "Formação React Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=5 "Formação Node.js Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=6 "Formação Machine Learning Specialist" output válido
+  ✔ [PASS] /certificado ALL: trilha id=7 "Formação AWS Cloud Practitioner" output válido
+  ✔ [PASS] /certificado ALL: trilha id=8 "Formação Azure Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=9 "Formação Docker e Kubernetes" output válido
+  ✔ [PASS] /certificado ALL: trilha id=10 "Formação SQL e Banco de Dados" output válido
+  ✔ [PASS] /certificado ALL: trilha id=11 "Formação Flutter Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=12 "Formação Kotlin Android Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=13 "Formação iOS Swift Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=14 "Formação DevOps e CI/CD" output válido
+  ✔ [PASS] /certificado ALL: trilha id=15 "Formação Data Engineer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=16 "Formação C# .NET Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=17 "Formação Go Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=18 "Formação Rust Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=19 "Formação Cybersecurity Specialist" output válido
+  ✔ [PASS] /certificado ALL: trilha id=20 "Formação Blockchain Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=21 "Formação Data Science com Python" output válido
+  ✔ [PASS] /certificado ALL: trilha id=22 "Formação Game Developer com Unity" output válido
+  ✔ [PASS] /certificado ALL: trilha id=23 "Formação UX/UI Designer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=24 "Formação PHP Laravel Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=25 "Formação Vue.js Developer" output válido
+  ✔ [PASS] /certificado ALL: trilha id=26 "Formação Inteligência Artificial Generativa" output válido
+  ✔ [PASS] /certificado ALL: trilha id=27 "Formação TypeScript Full Stack" output válido
+  ✔ [PASS] /certificado ALL: trilha id=28 "Formação Cloud Native com Google Cloud" output válido
+  ✔ [PASS] /certificado ALL: trilha id=29 "Formação Scrum e Gestão Ágil" output válido
+  ✔ [PASS] /certificado ALL: trilha id=30 "Formação Robótica e IoT com Python" output válido
+  ✔ [PASS] /certificado branding: título CERTIFICADO DE CONCLUSÃO
+  ✔ [PASS] /certificado branding: Digital Innovation One
+  ✔ [PASS] /certificado branding: — DIO presente
+
+════════════════════════════════════════════════════════════════════════════════
+
+  RESUMO EXECUTIVO
+
+  ✔  Unitários — helpers                     51 /  51  (100.0%)
+  ✔  Fluxo — /trilha                        125 / 125  (100.0%)
+  ✔  Fluxo — /desafio                        76 /  76  (100.0%)
+  ✔  Fluxo — /certificado                   135 / 135  (100.0%)
+
+────────────────────────────────────────────────────────────────────────────────
+
+  TOTAL GERAL
+  ├─ Testes executados : 387
+  ├─ Aprovados         : 387
+  ├─ Reprovados        : 0
+  └─ Cobertura         : 100.00%  ✔ META DE 70% ATINGIDA
+
+════════════════════════════════════════════════════════════════════════════════
+  Arquivo gerado automaticamente pelo runner de testes DIO.
+  Para re-executar: node tests/run-tests.js
+════════════════════════════════════════════════════════════════════════════════
