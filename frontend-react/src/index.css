@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@media print {
+  body { background: white !important; }
+  header, footer, .print\:hidden { display: none !important; }
+  #cert-pdf {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+}
